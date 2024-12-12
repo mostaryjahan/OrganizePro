@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { fetchTaskById } from '../services/data';
-// import { fetchTaskById, updateTask } from '';
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { fetchTaskById } from "../services/data";
 
 const EditTask = () => {
   const { taskId } = useParams();
@@ -23,8 +22,8 @@ const EditTask = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateTask(task);
-    navigate('/');
+
+    navigate("/");
   };
 
   if (!task) return <div>Loading...</div>;
@@ -33,11 +32,21 @@ const EditTask = () => {
     <form onSubmit={handleSubmit}>
       <label>
         Title:
-        <input type="text" name="title" value={task.title} onChange={handleChange} />
+        <input
+          type="text"
+          name="title"
+          value={task.title}
+          onChange={handleChange}
+        />
       </label>
       <label>
         Description:
-        <input type="text" name="description" value={task.description} onChange={handleChange} />
+        <input
+          type="text"
+          name="description"
+          value={task.description}
+          onChange={handleChange}
+        />
       </label>
       <label>
         Status:
