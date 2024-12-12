@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchTasks } from '../services/api';  // Import the fetchTasks function
+import { fetchTasks } from '../services/data';  // Import the fetchTasks function
 
 const Table = () => {
   const [tasks, setTasks] = useState([]);
