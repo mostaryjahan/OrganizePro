@@ -1,41 +1,60 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const AddTask = () => {
-  const [task, setTask] = useState({ title: '', description: '', status: 'To Do' });
-  const navigate = useNavigate();
+const AddTask = ({ addTask, tasks }) => {
+  const [newTask, setNewTask] = useState({ title: '', description: '', status: 'To Do' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setTask((prev) => ({ ...prev, [name]: value }));
+    setNewTask((prevTask) => ({ ...prevTask, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-  
-    console.log(task);
-    navigate('/'); 
+    if (!newTask.title.trim() || !newTask.description.trim()) {
+      alert('Please fill out all fields.');
+      return;
+    }
+
+    // Dynamically calculate the next ID based on the number of existing tasks
+    const nextId = tasks.length > 0 ? tasks[tasks.length - 1].id + 1 : 1;
+    addTask({ id: nextId, ...newTask });
+    setNewTask({ title: '', description: '', status: 'To Do' }); 
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Title:
-        <input type="text" name="title" value={task.title} onChange={handleChange} required />
-      </label>
-      <label>
-        Description:
-        <input type="text" name="description" value={task.description} onChange={handleChange} />
-      </label>
-      <label>
-        Status:
-        <select name="status" value={task.status} onChange={handleChange}>
-          <option value="To Do">To Do</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Done">Done</option>
-        </select>
-      </label>
-      <button type="submit">Add Task</button>
+    <form onSubmit={handleSubmit} className="flex gap-4 mb-4">
+      <input
+        type="text"
+        name="title"
+        placeholder="Title"
+        value={newTask.title}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded-md w-1/3"
+      />
+      <input
+        type="text"
+        name="description"
+        placeholder="Description"
+        value={newTask.description}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded-md w-1/3"
+      />
+      <select
+        name="status"
+        value={newTask.status}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded-md w-1/6"
+      >
+        <option value="To Do">To Do</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Done">Done</option>
+      </select>
+      <button
+        type="submit"
+        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+      >
+        Add Task
+      </button>
     </form>
   );
 };
