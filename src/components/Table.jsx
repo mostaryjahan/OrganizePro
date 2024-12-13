@@ -1,82 +1,92 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchTasks } from '../services/data'; // Import the fetchTasks function
+import { useEffect, useState } from 'react';
+import { ReactTabulator } from 'react-tabulator'; // Tabulator wrapper
+import 'tabulator-tables/dist/css/tabulator.min.css'; // Tabulator styles
+import { fetchTasks } from '../services/data';
 import AddTask from './AddTask';
 import FilterTasks from './FilterTask';
 
 const Table = () => {
   const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
 
+  // Fetch tasks on component mount
   useEffect(() => {
     const getTasks = async () => {
-      const data = await fetchTasks(); // Fetch tasks from the API
-      setTasks(data);
+      const data = await fetchTasks();
+      const mappedTasks = data.slice(0, 20).map((task) => ({
+        id: task.id,
+        title: task.title,
+        description: task.description, // Placeholder, as API doesn't have a description
+        status: task.completed ? 'Done' : 'To Do',
+      }));
+      setTasks(mappedTasks);
+      setFilteredTasks(mappedTasks);
     };
     getTasks();
-  }, []); // Empty dependency array to run only once when the component mounts
+  }, []);
+
+  // Tabulator columns configuration
+  const columns = [
+    { title: 'Task No.', field: 'id', width: 100 },
+    { title: 'Title', field: 'title', editor: 'input' },
+    { title: 'Description', field: 'description', editor: 'textarea' },
+    {
+      title: 'Status',
+      field: 'status',
+      editor: 'select',
+      editorParams: { values: ['To Do', 'In Progress', 'Done'] },
+    },
+    {
+      title: 'Actions',
+      formatter: 'buttonCross',
+      width: 100,
+      align: 'center',
+      cellClick: (e, cell) => handleDelete(cell.getData().id),
+    },
+  ];
+
+  // Delete a task
+  const handleDelete = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks);
+  };
+
+  // Add a new task
+  const addTask = (newTask) => {
+    const updatedTasks = [...tasks, newTask];
+    setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks);
+  };
+
+  // Filter tasks by status
+  const filterByStatus = (status) => {
+    if (status === 'All') {
+      setFilteredTasks(tasks);
+    } else {
+      setFilteredTasks(tasks.filter((task) => task.status === status));
+    }
+  };
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-2xl font-bold mb-4 text-gray-800 text-center">Organize<span className='text-orange-600'>Pro</span></h1>
+        <h1 className="text-2xl font-bold mb-4 text-gray-800 text-center">
+          Organize<span className="text-orange-600">Pro</span>
+        </h1>
         <div className="mb-6 flex justify-between items-center">
+          <FilterTasks onFilter={filterByStatus} />
+          <AddTask onAdd={addTask} />
         </div>
-        <FilterTasks />
-        <AddTask />
-
-
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-300">
-            <thead>
-              <tr className="bg-gray-200 text-gray-700">
-                <th className="px-6 py-3 text-left text-sm font-medium">Task NO.</th>
-                <th className="px-6 py-3 text-left text-sm font-medium">Title</th>
-                <th className="px-6 py-3 text-left text-sm font-medium">Description</th>
-                <th className="px-6 py-3 text-left text-sm font-medium">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-medium">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tasks.length > 0 ? (
-                tasks.map((task) => (
-                  <tr
-                    key={task.id}
-                    className="border-t border-gray-300 hover:bg-gray-100"
-                  >
-                    <td className="px-6 py-4 text-sm text-gray-600">{task.id}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{task.title}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{task.description}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{task.status}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
-                      <div className="flex space-x-2">
-                        <button
-                          className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-                        >
-                          Delete
-                        </button>
-                        <Link
-                          to={`/edit/${task.id}`}
-                          className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
-                        >
-                          Edit
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan="5"
-                    className="text-center py-6 text-gray-500 text-sm"
-                  >
-                    No tasks found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        <ReactTabulator
+          data={filteredTasks}
+          columns={columns}
+          layout="fitData"
+          options={{
+            responsiveLayout: 'collapse',
+            movableColumns: true,
+          }}
+        />
       </div>
     </div>
   );
