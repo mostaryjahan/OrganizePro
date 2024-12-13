@@ -10,9 +10,9 @@ const FilterTasks = ({ tasks, setFilteredTasks }) => {
   };
 
   return (
-    <div>
-      <label>Filter by Status:</label>
-      <select onChange={handleFilterChange} value={filter}>
+    <div className='flex justify-end mb-8'>
+      <label className='text-lg px-2'>Filter by Status: </label>
+      <select onChange={handleFilterChange} value={filter} className='border border-black px-2'>
         <option value="">All</option>
         <option value="To Do">To Do</option>
         <option value="In Progress">In Progress</option>

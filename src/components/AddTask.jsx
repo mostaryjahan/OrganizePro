@@ -12,9 +12,9 @@ const AddTask = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate adding task (replace with real API call if needed)
+  
     console.log(task);
-    navigate('/');  // Navigate back to home page
+    navigate('/'); 
   };
 
   return (

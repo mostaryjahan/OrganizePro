@@ -10,8 +10,8 @@ export const fetchTasks = async () => {
       return data.map((task) => ({
         id: task.id,
         title: task.title,
-        description: task.title,  // Placeholder for description (can be updated if needed)
-        status: task.completed ? 'Done' : 'To Do',  // Map the completed field to the status
+        description: task.title,  
+        status: task.completed ? 'Done' : 'To Do', 
       }));
     } catch (error) {
       console.error(error);
