@@ -4,11 +4,13 @@ import "tabulator-tables/dist/css/tabulator.min.css";
 import { fetchTasks } from "../services/data";
 import AddTask from "./AddTask";
 import FilterTask from "./FilterTask";
+import Search from "./Search";
 
 const Table = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
+  const [search, setSearch] = useState(""); 
 
   useEffect(() => {
     const getTasks = async () => {
@@ -26,13 +28,24 @@ const Table = () => {
   }, []);
 
   useEffect(() => {
-    // Filter tasks based on statusFilter
+    // Filter tasks based on statusFilter and searchQuery
+    let filtered = tasks;
+
     if (statusFilter) {
-      setFilteredTasks(tasks.filter((task) => task.status === statusFilter));
-    } else {
-      setFilteredTasks(tasks);
+      filtered = filtered.filter((task) => task.status === statusFilter);
     }
-  }, [statusFilter, tasks]);
+
+    if (search) {
+      filtered = filtered.filter(
+        (task) =>
+          task.title.toLowerCase().includes(search.toLowerCase()) ||
+          task.description.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    setFilteredTasks(filtered);
+  }, [statusFilter, search, tasks]);
+
 
   const columns = [
     { title: "Task No.", field: "id", width: 100 ,hozAlign: "center" },
@@ -71,13 +84,25 @@ const Table = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-2xl font-bold mb-4 text-gray-800 text-center">
+        <h1 className="text-3xl font-bold mb-4 text-gray-800 text-center">
           Organize<span className="text-orange-600">Pro</span>
         </h1>
-        <FilterTask
+
+        <div className="flex justify-between items-center mb-10 mt-10">
+          <div className="w-[50%]">
+          <Search search={search} setSearch={setSearch} />
+          </div>
+
+        
+
+      <div>
+      <FilterTask
           statusFilter={statusFilter}
           setStatusFilter={setStatusFilter}
         />
+      </div>
+       
+        </div>
         <AddTask addTask={addTask} tasks={tasks} />
 
         <ReactTabulator

@@ -6,12 +6,13 @@ const FilterTask = ({ statusFilter, setStatusFilter }) => {
   };
 
   return (
-    <div>
-      <label htmlFor="statusFilter">Filter by Status: </label>
+    <div className="">
+      <label className="text-lg" htmlFor="statusFilter">Filter by Status: </label>
       <select
         id="statusFilter"
         value={statusFilter}
         onChange={handleFilterChange}
+        className="border border-black px-2 py-1 rounded-sm"
       >
         <option value="">All</option>
         <option value="To Do">To Do</option>
