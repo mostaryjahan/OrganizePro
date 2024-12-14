@@ -5,9 +5,12 @@ import Home from './pages/Home.jsx'
 import EditTask from './components/EditTask';
 import AddTask from './components/AddTask.jsx';
 import FilterTask from './components/FilterTask.jsx';
+import { ToastContainer } from 'react-toastify';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
+     <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/edit/:taskId" element={<EditTask />} /> 
@@ -15,5 +18,7 @@ createRoot(document.getElementById('root')).render(
     <Route path="/filter" element={<FilterTask />}/>
 
   </Routes>
+  
+
 </BrowserRouter>
 )

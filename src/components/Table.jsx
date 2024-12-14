@@ -6,6 +6,8 @@ import AddTask from "./AddTask";
 import FilterTask from "./FilterTask";
 import Search from "./Search";
 import logo from "../assets/app.png";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Table = () => {
   const [tasks, setTasks] = useState([]);
@@ -47,15 +49,6 @@ const Table = () => {
     setFilteredTasks(filtered);
   }, [statusFilter, search, tasks]);
 
-    // Update task status inline
-    const handleStatusChange = (newStatus, taskId) => {
-      const updatedTasks = tasks.map((task) =>
-        task.id === taskId ? { ...task, status: newStatus } : task
-      );
-      setTasks(updatedTasks);
-      setFilteredTasks(updatedTasks);
-    };
-
   const columns = [
     { title: "Task No.", field: "id", width: 100, hozAlign: "center" },
     { title: "Title", field: "title", editor: "input" },
@@ -67,8 +60,8 @@ const Table = () => {
       editor: "select",
       hozAlign: "center",
       editorParams: { values: ["To Do", "In Progress", "Done"] },
-      cellEdited: (cell) => handleStatusChange(cell.getValue(), cell.getRow().getData().id),
-
+      cellEdited: (cell) =>
+        handleStatusChange(cell.getValue(), cell.getRow().getData().id),
     },
     {
       title: "Actions",
@@ -80,16 +73,30 @@ const Table = () => {
     },
   ];
 
-  const handleDelete = (id) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
-    setFilteredTasks(updatedTasks);
-  };
-
+  // add task
   const addTask = (newTask) => {
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
     setFilteredTasks(updatedTasks);
+    toast.success("Task added successfully!");
+  };
+
+  // delete task
+  const handleDelete = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks);
+    toast.success("Task deleted successfully!");
+  };
+
+  // Update task status
+  const handleStatusChange = (newStatus, taskId) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, status: newStatus } : task
+    );
+    setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks);
+    toast.success("Task status updated successfully!");
   };
 
   // Calculate task counts by status
