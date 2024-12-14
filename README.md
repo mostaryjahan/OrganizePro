@@ -1,13 +1,13 @@
 ### Live Link: https://organize-pro-theta.vercel.app/
 
-# Task List Manager  
+## OrganizePro  
 
-## Objective  
-The **Task List Manager** is a responsive web application built using **React.js** and **Tabulator.js**, aimed at managing tasks effectively. This project demonstrates the ability to integrate external libraries, fetch data from APIs, and implement dynamic features like adding, editing, filtering, and deleting tasks in an editable table.  
+### Objective  
+The **OrganizePro** is a responsive web application built using **React.js** and **Tabulator.js**, aimed at managing tasks effectively. This project demonstrates the ability to integrate external libraries, fetch data from APIs, and implement dynamic features like adding, editing, filtering, and deleting tasks in an editable table.  
 
 ---
 
-## Features  
+### Features  
 
 1. **Editable Task Table**  
    - Display tasks in a table using Tabulator.js.  
@@ -32,7 +32,7 @@ The **Task List Manager** is a responsive web application built using **React.js
 
 ---
 
-## Bonus Features  
+### Bonus Features  
 
 1. **Search Bar**  
    - Filter tasks dynamically based on their Title or Description.  
@@ -45,7 +45,7 @@ The **Task List Manager** is a responsive web application built using **React.js
 
 ---
 
-## Tech Stack  
+### Tech Stack  
 
 - **React.js**  
 - **Tabulator.js**  
@@ -55,11 +55,11 @@ The **Task List Manager** is a responsive web application built using **React.js
 
 
 
-## Installation  
+### Installation  
 
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/your-username/task-list-manager.git
+   git clone https://github.com/mostaryjahan/OrganizePro.git
    cd task-list-manager
    ```  
 
@@ -77,7 +77,7 @@ The **Task List Manager** is a responsive web application built using **React.js
 
 
 
-## API Integration  
+### API Integration  
 
 The initial task data is fetched from:  
 - [https://jsonplaceholder.typicode.com/todos](https://jsonplaceholder.typicode.com/todos)  
@@ -90,7 +90,7 @@ Data processing:
 
 ---
 
-## Deployment  
+### Deployment  
 
 This project is deployed on Vercel. You can view the live application here:  
 - **Live Demo**: [https://organize-pro-theta.vercel.app/]  
