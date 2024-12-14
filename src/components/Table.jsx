@@ -5,12 +5,13 @@ import { fetchTasks } from "../services/data";
 import AddTask from "./AddTask";
 import FilterTask from "./FilterTask";
 import Search from "./Search";
+import logo from "../assets/app.png";
 
 const Table = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
-  const [search, setSearch] = useState(""); 
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const getTasks = async () => {
@@ -46,9 +47,8 @@ const Table = () => {
     setFilteredTasks(filtered);
   }, [statusFilter, search, tasks]);
 
-
   const columns = [
-    { title: "Task No.", field: "id", width: 100 ,hozAlign: "center" },
+    { title: "Task No.", field: "id", width: 100, hozAlign: "center" },
     { title: "Title", field: "title", editor: "input" },
     { title: "Description", field: "description", editor: "textarea" },
     {
@@ -65,6 +65,7 @@ const Table = () => {
       formatter: "buttonCross",
       width: 100,
       hozAlign: "center",
+      vertAlign: "middle", 
       cellClick: (e, cell) => handleDelete(cell.getData().id),
     },
   ];
@@ -83,25 +84,25 @@ const Table = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <div className="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-3xl font-bold mb-4 text-gray-800 text-center">
-          Organize<span className="text-orange-600">Pro</span>
-        </h1>
+      <div className="max-w-5xl mx-auto bg-sky-100 shadow-md rounded-lg p-6">
+        <div className="flex justify-center items-center">
+          <img src={logo} alt="logo" className="w-12 h-12" />
+          <h1 className="text-3xl font-bold mb-4 text-gray-800 text-center mt-2">
+            Organize<span className="text-orange-600">Pro</span>
+          </h1>
+        </div>
 
         <div className="flex justify-between items-center mb-10 mt-10">
           <div className="w-[50%]">
-          <Search search={search} setSearch={setSearch} />
+            <Search search={search} setSearch={setSearch} />
           </div>
 
-        
-
-      <div>
-      <FilterTask
-          statusFilter={statusFilter}
-          setStatusFilter={setStatusFilter}
-        />
-      </div>
-       
+          <div>
+            <FilterTask
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
+            />
+          </div>
         </div>
         <AddTask addTask={addTask} tasks={tasks} />
 
