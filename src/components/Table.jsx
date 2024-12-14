@@ -8,7 +8,7 @@ import FilterTask from "./FilterTask";
 const Table = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
-  const [statusFilter, setStatusFilter] = useState(""); 
+  const [statusFilter, setStatusFilter] = useState("");
 
   useEffect(() => {
     const getTasks = async () => {
@@ -30,18 +30,20 @@ const Table = () => {
     if (statusFilter) {
       setFilteredTasks(tasks.filter((task) => task.status === statusFilter));
     } else {
-      setFilteredTasks(tasks); // If no filter, show all tasks
+      setFilteredTasks(tasks);
     }
   }, [statusFilter, tasks]);
 
   const columns = [
-    { title: "Task No.", field: "id", width: 100 },
+    { title: "Task No.", field: "id", width: 100 ,hozAlign: "center" },
     { title: "Title", field: "title", editor: "input" },
     { title: "Description", field: "description", editor: "textarea" },
     {
       title: "Status",
       field: "status",
+      width: 100,
       editor: "select",
+      hozAlign: "center",
       editorParams: { values: ["To Do", "In Progress", "Done"] },
     },
     {
@@ -49,11 +51,10 @@ const Table = () => {
       field: "actions",
       formatter: "buttonCross",
       width: 100,
-      align: "center",
+      hozAlign: "center",
       cellClick: (e, cell) => handleDelete(cell.getData().id),
     },
   ];
-  console.log(columns);
 
   const handleDelete = (id) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
@@ -73,13 +74,16 @@ const Table = () => {
         <h1 className="text-2xl font-bold mb-4 text-gray-800 text-center">
           Organize<span className="text-orange-600">Pro</span>
         </h1>
-        <FilterTask statusFilter={statusFilter} setStatusFilter={setStatusFilter} /> 
+        <FilterTask
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+        />
         <AddTask addTask={addTask} tasks={tasks} />
 
         <ReactTabulator
           data={filteredTasks}
           columns={columns}
-          layout="fitData"
+          layout="fitColumns"
           options={{
             responsiveLayout: "collapse",
             movableColumns: true,

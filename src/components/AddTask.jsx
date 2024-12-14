@@ -29,7 +29,7 @@ const AddTask = ({ addTask, tasks }) => {
         placeholder="Title"
         value={newTask.title}
         onChange={handleChange}
-        className="border px-3 py-2 rounded-md w-1/3"
+        className="border border-slate-500 px-3 py-2 rounded-md w-1/3  hover:border-2 hover:border-slate-900"
       />
       <input
         type="text"
@@ -37,13 +37,13 @@ const AddTask = ({ addTask, tasks }) => {
         placeholder="Description"
         value={newTask.description}
         onChange={handleChange}
-        className="border px-3 py-2 rounded-md w-1/3"
+        className="border border-slate-500 px-3 py-2 rounded-md w-1/3 hover:border-2 hover:border-slate-900"
       />
       <select
         name="status"
         value={newTask.status}
         onChange={handleChange}
-        className="border px-3 py-2 rounded-md w-1/6"
+        className="border border-slate-500 px-3 py-2 rounded-md w-1/6 hover:border-2 hover:border-slate-900"
       >
         <option value="To Do">To Do</option>
         <option value="In Progress">In Progress</option>
@@ -51,7 +51,7 @@ const AddTask = ({ addTask, tasks }) => {
       </select>
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        className="bg-orange-500 font-semibold text-white px-2 lg:px-4 py-1 lg:py-2 rounded-md hover:bg-orange-600"
       >
         Add Task
       </button>

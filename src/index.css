@@ -2,3 +2,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Center-aligns for all table headers */
+.tabulator-col {
+    text-align: center !important; 
+  }
+  
+ 
+  
