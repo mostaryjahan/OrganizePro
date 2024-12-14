@@ -60,7 +60,7 @@ The **OrganizePro** is a responsive web application built using **React.js** and
 1. Clone the repository:  
    ```bash
    git clone https://github.com/mostaryjahan/OrganizePro.git
-   cd task-list-manager
+   cd OrganizePro
    ```  
 
 2. Install dependencies:  
