@@ -1,12 +1,9 @@
 ### Live Link: https://organize-pro-theta.vercel.app/
 
-Here's a sample `README.md` file for your **OrganizePro** project based on the challenge requirements:  
-
-```markdown
-# OrganizePro  
+# Task List Manager  
 
 ## Objective  
-The **OrganizePro** is a responsive web application built using **React.js** and **Tabulator.js**, aimed at managing tasks effectively. This project demonstrates the ability to integrate external libraries, fetch data from APIs, and implement dynamic features like adding, editing, filtering, and deleting tasks in an editable table.  
+The **Task List Manager** is a responsive web application built using **React.js** and **Tabulator.js**, aimed at managing tasks effectively. This project demonstrates the ability to integrate external libraries, fetch data from APIs, and implement dynamic features like adding, editing, filtering, and deleting tasks in an editable table.  
 
 ---
 
@@ -55,7 +52,8 @@ The **OrganizePro** is a responsive web application built using **React.js** and
 - **TailwindCSS**  
 - **JavaScript**  
 
----
+
+
 
 ## Installation  
 
