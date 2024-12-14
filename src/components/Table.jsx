@@ -29,7 +29,7 @@ const Table = () => {
   }, []);
 
   useEffect(() => {
-    // Filter tasks based on statusFilter and searchQuery
+    // Filter tasks based on statusFilter and search
     let filtered = tasks;
 
     if (statusFilter) {
@@ -47,6 +47,15 @@ const Table = () => {
     setFilteredTasks(filtered);
   }, [statusFilter, search, tasks]);
 
+    // Update task status inline
+    const handleStatusChange = (newStatus, taskId) => {
+      const updatedTasks = tasks.map((task) =>
+        task.id === taskId ? { ...task, status: newStatus } : task
+      );
+      setTasks(updatedTasks);
+      setFilteredTasks(updatedTasks);
+    };
+
   const columns = [
     { title: "Task No.", field: "id", width: 100, hozAlign: "center" },
     { title: "Title", field: "title", editor: "input" },
@@ -58,6 +67,8 @@ const Table = () => {
       editor: "select",
       hozAlign: "center",
       editorParams: { values: ["To Do", "In Progress", "Done"] },
+      cellEdited: (cell) => handleStatusChange(cell.getValue(), cell.getRow().getData().id),
+
     },
     {
       title: "Actions",
@@ -65,7 +76,6 @@ const Table = () => {
       formatter: "buttonCross",
       width: 100,
       hozAlign: "center",
-      vertAlign: "middle", 
       cellClick: (e, cell) => handleDelete(cell.getData().id),
     },
   ];
@@ -82,6 +92,14 @@ const Table = () => {
     setFilteredTasks(updatedTasks);
   };
 
+  // Calculate task counts by status
+  const taskCounts = {
+    "To Do": filteredTasks.filter((task) => task.status === "To Do").length,
+    "In Progress": filteredTasks.filter((task) => task.status === "In Progress")
+      .length,
+    Done: filteredTasks.filter((task) => task.status === "Done").length,
+  };
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="max-w-5xl mx-auto bg-sky-100 shadow-md rounded-lg p-6">
@@ -92,8 +110,17 @@ const Table = () => {
           </h1>
         </div>
 
-        <div className="flex justify-between items-center mb-10 mt-10">
-          <div className="w-[50%]">
+        <div className="flex justify-between items-center mb-6 mt-10 gap-6">
+          <div className=" mb-4">
+            <h2 className="text-xl font-bold">Task Count</h2>
+
+            <div className="">
+              <p>To Do: {taskCounts["To Do"]}</p>
+              <p>In Progress: {taskCounts["In Progress"]}</p>
+              <p>Done: {taskCounts["Done"]}</p>
+            </div>
+          </div>
+          <div className="lg:w-[50%]">
             <Search search={search} setSearch={setSearch} />
           </div>
 

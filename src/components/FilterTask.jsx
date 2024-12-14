@@ -7,7 +7,7 @@ const FilterTask = ({ statusFilter, setStatusFilter }) => {
 
   return (
     <div className="">
-      <label className="text-lg" htmlFor="statusFilter">Filter by Status: </label>
+      <label className="text-lg font-semibold" htmlFor="statusFilter">Filter by Status: </label>
       <select
         id="statusFilter"
         value={statusFilter}
